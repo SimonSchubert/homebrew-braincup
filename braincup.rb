@@ -1,9 +1,9 @@
 class Braincup < Formula
   desc "Train your math skills, memory and focus."
   homepage "https://github.com/SimonSchubert/Braincup"
-  url "https://github.com/SimonSchubert/Braincup/raw/master/archive/braincup-1.3.1.zip"
-  sha256 "08047f6db660fed56ac7f15ddffbd337c7ba388ef01db255a667487d141d060d"
-  version "1.3.1"
+  url "https://github.com/SimonSchubert/Braincup/raw/master/archive/braincup-1.4.1.zip"
+  sha256 "aa5054484fe5cf6eb678e959b6bf3b941a4986f24f5a94c0708c2be4d8947924"
+  version "1.4.1"
 
   bottle :unneeded
 
