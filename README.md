@@ -7,6 +7,7 @@ Homebrew tap for Simon Schubert's applications.
 | App | Description | Install |
 |-----|-------------|---------|
 | **Kai** | Cross-platform AI chat client | `brew install --cask simonschubert/tap/kai` |
+| **Orcaeye** | Manage agent CLI skills, memories and scheduled runs | `brew install --cask simonschubert/tap/orcaeye` |
 | **Braincup** | Memory training games | `brew install --cask simonschubert/tap/braincup` |
 | **Linux Command Library** | Linux command reference GUI | `brew install --cask simonschubert/tap/linux-command-library` |
 
@@ -24,6 +25,7 @@ brew tap simonschubert/tap
 
 # Install GUI apps
 brew install --cask kai
+brew install --cask orcaeye
 brew install --cask braincup
 brew install --cask linux-command-library
 
@@ -35,6 +37,7 @@ brew install linux-command-library-cli
 
 ```bash
 brew install --cask simonschubert/tap/kai
+brew install --cask simonschubert/tap/orcaeye
 brew install --cask simonschubert/tap/braincup
 brew install --cask simonschubert/tap/linux-command-library
 brew install simonschubert/tap/linux-command-library-cli

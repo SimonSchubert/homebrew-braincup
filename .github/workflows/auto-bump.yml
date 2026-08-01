@@ -45,6 +45,24 @@ jobs:
             fi
           fi
 
+          # Check Orcaeye (dual-arch: separate arm64 and x64 DMGs)
+          CURRENT_ORCA=$(grep 'version "' Casks/orcaeye.rb | head -1 | cut -d'"' -f2)
+          LATEST_ORCA=$(curl -sH "Authorization: token $GH_TOKEN" https://api.github.com/repos/SimonSchubert/Orcaeye/releases/latest | jq -r '.tag_name // empty' | sed 's/^v//')
+          echo "Orcaeye: current=$CURRENT_ORCA latest=$LATEST_ORCA"
+          if [ -n "$LATEST_ORCA" ] && [ "$CURRENT_ORCA" != "$LATEST_ORCA" ]; then
+            curl -sL "https://github.com/SimonSchubert/Orcaeye/releases/download/v${LATEST_ORCA}/Orcaeye-${LATEST_ORCA}-macos-arm64.dmg" -o /tmp/orcaeye-arm64.dmg
+            curl -sL "https://github.com/SimonSchubert/Orcaeye/releases/download/v${LATEST_ORCA}/Orcaeye-${LATEST_ORCA}-macos-x64.dmg" -o /tmp/orcaeye-x64.dmg
+            if [ -s /tmp/orcaeye-arm64.dmg ] && [ -s /tmp/orcaeye-x64.dmg ]; then
+              SHA_ARM=$(shasum -a 256 /tmp/orcaeye-arm64.dmg | cut -d' ' -f1)
+              SHA_X64=$(shasum -a 256 /tmp/orcaeye-x64.dmg | cut -d' ' -f1)
+              # Anchored so these only touch their own lines — the cask holds two checksums.
+              sed -i '' -E "s|^  version \".*\"|  version \"${LATEST_ORCA}\"|" Casks/orcaeye.rb
+              sed -i '' -E "s|(arm:[[:space:]]+)\"[a-f0-9]{64}\"|\1\"${SHA_ARM}\"|" Casks/orcaeye.rb
+              sed -i '' -E "s|(intel:[[:space:]]+)\"[a-f0-9]{64}\"|\1\"${SHA_X64}\"|" Casks/orcaeye.rb
+              echo "ORCA=1" >> $GITHUB_ENV
+            fi
+          fi
+
           # Check LCL GUI
           CURRENT_LCL=$(grep 'version "' Casks/linux-command-library.rb | head -1 | cut -d'"' -f2)
           LATEST_LCL=$(curl -sH "Authorization: token $GH_TOKEN" https://api.github.com/repos/SimonSchubert/LinuxCommandLibrary/releases/latest | jq -r '.tag_name // empty' | sed 's/^v//')
